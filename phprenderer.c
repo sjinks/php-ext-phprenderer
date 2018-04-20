@@ -378,6 +378,24 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo___construct, 0, 0, 0)
     ZEND_ARG_ARRAY_INFO(0, attributes, 1)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_setAttributes, 0, 0, 1)
+    ZEND_ARG_ARRAY_INFO(0, attributes, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_addAttribute, 0, 0, 2)
+    ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+    ZEND_ARG_INFO(0, value)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_getAttribute, 0, 0, 1)
+    ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_setTemplatePath, 0, 0, 1)
+    ZEND_ARG_TYPE_INFO(0, path, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID < 70200
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_render, 0, 2, IS_OBJECT, "Psr\\Http\\Message\\ResponseInterface", 0)
     ZEND_ARG_OBJ_INFO(0, response, Psr\\Http\\Message\\ResponseInterface, 0)
     ZEND_ARG_TYPE_INFO(0, template, IS_STRING, 0)
@@ -392,25 +410,26 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_getAttributes, 0, 0, IS_ARRAY, NULL, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_setAttributes, 0, 0, 1)
-    ZEND_ARG_ARRAY_INFO(0, attributes, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_addAttribute, 0, 0, 2)
-    ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-    ZEND_ARG_INFO(0, value)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_getAttribute, 0, 0, 1)
-    ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_getTemplatePath, 0, 0, IS_STRING, NULL, 0)
 ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_setTemplatePath, 0, 0, 1)
-    ZEND_ARG_TYPE_INFO(0, path, IS_STRING, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_render, 0, 2, "Psr\\Http\\Message\\ResponseInterface", 0)
+    ZEND_ARG_OBJ_INFO(0, response, Psr\\Http\\Message\\ResponseInterface, 0)
+    ZEND_ARG_TYPE_INFO(0, template, IS_STRING, 0)
+    ZEND_ARG_ARRAY_INFO(0, data, 1)
 ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_fetch, 0, 1, IS_STRING, 0)
+    ZEND_ARG_TYPE_INFO(0, template, IS_STRING, 0)
+    ZEND_ARG_ARRAY_INFO(0, data, 1)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_getAttributes, 0, 0, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_getTemplatePath, 0, 0, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+#endif
 
 static const zend_function_entry fe_wildwolf_views_phprenderer[] = {
     PHP_ME(WildWolf_Views_PhpRenderer, __construct,     arginfo___construct,     ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
