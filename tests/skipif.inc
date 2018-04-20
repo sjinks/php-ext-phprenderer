@@ -1,0 +1,1 @@
+<?php if (!extension_loaded("phprenderer")) die("skip"); ?>
