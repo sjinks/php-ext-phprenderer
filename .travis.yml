@@ -20,6 +20,11 @@ matrix:
   allow_failures:
     - php: nightly
 
+addons:
+  apt:
+    packages:
+      valgrind
+
 before_script:
   - phpize && ./configure --silent && make --silent && make install
 

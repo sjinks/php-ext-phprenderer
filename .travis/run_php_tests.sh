@@ -5,7 +5,7 @@ DIR=$(readlink -enq "$(dirname $0)/../")
 shopt -s nullglob
 export NO_INTERACTION=1
 export REPORT_EXIT_STATUS=1
-make -C "$DIR" test
+make -C "$DIR" TESTS=-m test
 for i in $DIR/tests/*.log $DIR/tests/*.mem; do
 	echo "====== $i ======";
 	cat "$i";
